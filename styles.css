@@ -22,11 +22,11 @@ body {
 .hero-title {
     /* font-family: 'Brush Script MT', cursive; */
     font-family: 'Dancing Script';
-    font-size: 20vh;
+/*     font-size: 20vh; */
     /* background: linear-gradient(to right, rgb(255, 115, 0), rgb(197, 72, 0)); */
-    background: linear-gradient(to right, rgb(255, 193, 59), rgb(255, 174, 0));
+/*     background: linear-gradient(to right, rgb(255, 193, 59), rgb(255, 174, 0)); */
     /* -webkit-background-clip: text; */
-    color: transparent;
+/*     color: transparent; */
     font-size: 3.5rem; /* Increased font size */
 }
 
