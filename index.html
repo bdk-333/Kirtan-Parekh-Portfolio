@@ -1,226 +1,624 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kirtan Parekh | Data Driven</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kirtan Parekh | Portfolio</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
 
-    <!-- fonts: -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <!-- <header class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-            <img src="KP_logo.png" alt="Logo" style="height: auto; width:auto;">
-            John Doe
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </header> -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
 
+  <body>
+    <div id="loader-overlay">
+      <div id="loader-spinner"></div>
+    </div>
 
-    <header class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="My_logo.jpg" alt="Logo" class="img-fluid" style="height: 30px; margin-right: 10px; border-radius: 100%">
-                <span>Kirtan Parekh</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
+    <header>
+      <div class="container">
+        <nav>
+          <a href="#" class="logo">
+            <img
+              src="assets/images/updated_logo - Copy.png"
+              alt="KP Logo"
+            />
+          </a>
+
+          <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#education">Education</a>
+            <a href="#contact">Contact</a>
+          </div>
+
+          <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </nav>
+      </div>
     </header>
 
-    <!-- <section id="hero" class="hero text-center text-white d-flex align-items-center justify-content-center">
-        <div class="container">
-            <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic rounded-circle mb-3">
-            <h1 class="display-4">Hi, I'm Kirtankumar Parekh</h1>
-            <p class="lead">Data Science Graduate Student | AI/ML Enthusiast | Problem Solver</p>
-            <a href="#contact" class="btn btn-light btn-lg">Hire Me</a>
-            <div class="social-icons mt-3">
-                <a href="https://linkedin.com" class="text-white mx-3"><i class="fab fa-linkedin fa-2x"></i></a>
-                <a href="https://github.com" class="text-white mx-3"><i class="fab fa-github fa-2x"></i></a>
-                <a href="https://twitter.com" class="text-white mx-3"><i class="fab fa-twitter fa-2x"></i></a>
-            </div>
-        </div>
-    </section> -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
 
-
-    <section id="hero" class="hero text-center text-white d-flex align-items-center justify-content-center">
-        <div class="container">
-            <img src="Me.jpg" alt="Profile Picture" class="profile-pic rounded-circle mb-3">
-            <h1 class="display-3 hero-title">Hi, I'm Kirtankumar Parekh</h1>
-            <p class="lead" style="font-weight: bold;">Data Science Graduate Student | AI/ML Enthusiast | Problem Solver</p>
-            <!-- <a href="#contact" class="btn btn-light btn-lg">Hire Me</a> -->
-            <div class="social-icons-hero mt-3">
-                <a href="https://linkedin.com" class="text-white mx-3" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
-                <a href="https://github.com" class="text-white mx-3" target="_blank"><i class="fab fa-github fa-2x"></i></a>
-                <a href="https://kaggle.com" class="text-white mx-3" target="_blank"><i class="fab fa-kaggle fa-2x"></i></a>
-            </div>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-bg-secondary"></div>
+        <div class="hero-content">
+          <h1>Hi, I'm Kirtankumar Parekh</h1>
+          <p>
+            Motivated Data Science grad student passionate about leveraging
+            data to solve complex problems and drive insights.
+          </p>
+          <div class="hero-btns">
+            <a href="#projects" class="btn">View My Projects</a>
+            <a href="#contact" class="btn">Connect With Me</a>
+          </div>
         </div>
+      </div>
     </section>
 
-    <section id="about" class="section bg-light py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">About Me</h2>
-            <!-- <p class="text-center">I am a passionate developer with a strong interest in web development, data analysis, and creating user-friendly applications. With hands-on experience in Python, Flask, and front-end development, I love turning ideas into reality through code.</p> -->
+    <section id="about">
+      <div class="container">
+        <h2>About Me</h2>
+        <p class="section-description">
+          A glimpse into my journey and passion for data-driven innovation
+        </p>
 
-            <p class="text-center"></p>I'm a data-driven explorer, passionate about uncovering insights from complex datasets. With a keen interest in machine learning, I'm always eager to leverage the power of AI to solve real-world problems. I'm excited to continue learning and growing in this dynamic field.</p>
-
+        <div class="about-grid">
+          <div class="about-image">
+            <img
+              src="assets/images/kirtankumar_parekh.png"
+              onerror="this.onerror=null;this.src='https://placehold.co/600x400/e2e8f0/64748b?text=Kirtankumar%20Parekh';"
+              alt="About Kirtankumar Parekh"
+            />
+          </div>
+          <div class="about-content">
+            <h3>
+              Empowering decisions through data science, machine learning, and
+              robust programming.
+            </h3>
+            <p>
+              As a highly motivated professional, I am driven by a passion for
+              transforming complex data into actionable insights. My expertise
+              lies in applying analytical skills to solve challenging problems
+              and contribute to impactful projects. I thrive in dynamic
+              environments, demonstrating proven ability to work effectively
+              both independently and as part of a collaborative team. I am
+              actively seeking opportunities to apply my theoretical knowledge
+              and practical experience in real-world scenarios, contributing to
+              innovative solutions and continuous learning.
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
-    <section id="skills" class="section py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">Skills</h2>
-            <div class="row text-center">
-                <div class="col-md-3 col-sm-6 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <i class="fab fa-html5 fa-3x mb-3"></i>
-                            <h5 class="card-title">HTML, CSS, JavaScript</h5>
-                        </div>
-                    </div>
+    <section id="experience" class="experience">
+      <div class="container">
+        <h2>My Experience</h2>
+        <p class="section-description">
+          Practical applications and learning through internships and training
+        </p>
+
+        <div class="experience-grid">
+          <div class="experience-card">
+            <h3>Venom Technologies</h3>
+            <span class="role">Python Developer Intern</span>
+            <span class="duration">Jan 2024 - Apr 2024</span>
+            <ul>
+              <li>
+                Developed a lightweight web application (Grocery Store
+                Management System) for small-scale grocery store owners.
+              </li>
+              <li>
+                Implemented core CRUD operations for products, customer orders,
+                and categories.
+              </li>
+              <li>
+                Utilized Flask and Python for backend development, integrated
+                with a MySQL database, and Bootstrap for the frontend UI.
+              </li>
+            </ul>
+          </div>
+          <div class="experience-card">
+            <h3>EDUNET Foundation in collaboration with AICTE</h3>
+            <span class="role">Artificial Intelligence Intern</span>
+            <span class="duration">Jun 2023 - Jul 2023</span>
+            <ul>
+              <li>
+                Successfully completed a 6-week internship via IBM's Skills
+                Build Platform.
+              </li>
+              <li>
+                Gained foundational knowledge in AI and ML, including algorithms
+                like Linear Regression and Logistic Regression.
+              </li>
+              <li>
+                Contributed to the "Mental Fitness Tracker" project, training
+                regression models on mental health data (1990-2020) from over
+                150 countries, with DALY as the target variable.
+              </li>
+              <li>
+                Achieved an R² score of 0.76 with Linear Regression after
+                cross-validation, demonstrating effective predictive modeling.
+              </li>
+            </ul>
+          </div>
+          <div class="experience-card">
+            <h3>SAP Code Unnati Training Program</h3>
+            <span class="role">Internship Trainee</span>
+            <span class="duration">Aug 2022 - Jan 2023</span>
+            <ul>
+              <li>
+                Completed a 12-week training program by Code Unnati, an SAP CSR
+                initiative.
+              </li>
+              <li>
+                Explored emerging technologies including Internet of Things
+                (IoT), Machine Learning, and Deep Learning.
+              </li>
+              <li>
+                Enhanced skills in Business Technology Platforms, Python
+                programming, and essential Soft Skills.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="projects">
+      <div class="container">
+        <h2>My Data Science Projects</h2>
+        <p class="section-description">
+          Showcasing my practical application of data science and machine
+          learning
+        </p>
+
+        <div class="projects-slider-container">
+          <button class="slider-nav-btn left" aria-label="Previous Project">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="projects-slider-wrapper">
+            <div class="project-card">
+              <div class="project-image">
+                <img
+                  src="assets/images/project1_cricket_classifier.png"
+                  onerror="this.onerror=null;this.src='https://placehold.co/400x200/e2e8f0/64748b?text=Cricket%20Classifier';"
+                  alt="Indian Cricket Player Classifier Project Image"
+                />
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Indian Cricket Player Classifier</h3>
+                <p class="project-description">
+                  Developed a robust image classification model to identify
+                  Indian cricket players. This project involved collecting and
+                  preprocessing a diverse dataset of player images, followed by
+                  training various classification algorithms. Achieved a notable
+                  77.8% accuracy using a Support Vector Machine (SVM) model. A
+                  user-friendly Flask-based UI was developed for interactive
+                  predictions.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">Python</span>
+                  <span class="tag">Machine Learning</span>
+                  <span class="tag">SVM</span>
+                  <span class="tag">Image Processing</span>
+                  <span class="tag">Flask</span>
                 </div>
-                <div class="col-md-3 col-sm-6 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <i class="fab fa-python fa-3x mb-3"></i>
-                            <h5 class="card-title">Python, Flask</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <i class="fas fa-chart-line fa-3x mb-3"></i>
-                            <h5 class="card-title">Data Analysis</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <i class="fas fa-laptop-code fa-3x mb-3"></i>
-                            <h5 class="card-title">AI/ML</h5>
-                        </div>
-                    </div>
-                </div>
+                <a
+                  href="https://github.com/bdk-333/Indian-Cricket-Player-Classifier"
+                  class="btn"
+                  target="_blank"
+                  >View Project</a
+                >
+              </div>
             </div>
-        </div>
-    </section>
 
-    <section id="projects" class="section bg-light py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">Projects</h2>
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100">
-                        <img src="project1.jpg" class="card-img-top" alt="Project 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Grocery Store Management</h5>
-                            <p class="card-text">An inventory management system designed for efficient operations in retail.</p>
-                            <a href="#" class="btn btn-primary">View Project</a>
-                        </div>
-                    </div>
+            <div class="project-card">
+              <div class="project-image">
+                <img
+                  src="assets/images/project2_emotion_detection.png"
+                  onerror="this.onerror=null;this.src='https://placehold.co/400x200/e2e8f0/64748b?text=Emotion%20Detection';"
+                  alt="Emotion Detection System Project Image"
+                />
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">
+                  Real-time Emotion Detection System
+                </h3>
+                <p class="project-description">
+                  Engineered a real-time emotion detection system capable of
+                  classifying up to seven distinct human emotions from live
+                  camera feeds. This project leveraged a pre-trained deep
+                  learning model in Python, demonstrating practical application
+                  of computer vision and AI for immediate emotional analysis.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">Python</span>
+                  <span class="tag">Deep Learning</span>
+                  <span class="tag">Computer Vision</span>
+                  <span class="tag">Real-time Processing</span>
                 </div>
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100">
-                        <img src="project2.jpg" class="card-img-top" alt="Project 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Mental Fitness Tracker</h5>
-                            <p class="card-text">A machine learning project to predict mental wellness trends using global data.</p>
-                            <a href="#" class="btn btn-primary">View Project</a>
-                        </div>
-                    </div>
-                </div>
+                <a href="#" class="btn">View Project</a>
+              </div>
             </div>
-        </div>
-    </section>
 
-    <section id="education" class="section py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">Education</h2>
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Master of Science in Data Science</h5>
-                            <p class="card-text">DePaul University,<br>2024 - 2026<br>CGPA: 4.0 Out of 4.0</p>
-                        </div>
-                    </div>
+            <div class="project-card">
+              <div class="project-image">
+                <img
+                  src="assets/images/project3_insurance_premiums.png"
+                  onerror="this.onerror=null;this.src='https://placehold.co/400x200/e2e8f0/64748b?text=Insurance%20Premiums';"
+                  alt="Predicting Insurance Premiums Project Image"
+                />
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">
+                  Predicting Insurance Premiums (Kaggle)
+                </h3>
+                <p class="project-description">
+                  Participated in a Kaggle competition focusing on predicting
+                  insurance premiums. This involved extensive data preprocessing
+                  and Exploratory Data Analysis (EDA) on the given dataset.
+                  Multiple regression models were trained using the Scikit-Learn
+                  library within optimized pipelines. A Linear Regression model
+                  with a log transformation on the target variable yielded the
+                  best result, achieving a Root Mean Squared Log Error (RMSLE)
+                  of 1087.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">Python</span>
+                  <span class="tag">Machine Learning</span>
+                  <span class="tag">Regression</span>
+                  <span class="tag">EDA</span>
+                  <span class="tag">Scikit-learn</span>
                 </div>
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Bachelor of Science in Computer Engineering</h5>
-                            <p class="card-text">A D Patel Institute of Technology (CVM University),<br>2020 - 2024<br>CGPA: 8.90 Out of 10.00</p>
-                        </div>
-                    </div>
-                </div>
+                <a
+                  href="https://www.kaggle.com/blackdragonk333/predicting-insurance-premiums-4-12"
+                  class="btn"
+                  target="_blank"
+                  >View Kaggle Notebook</a
+                >
+              </div>
             </div>
-        </div>
-    </section>
 
-    <section id="contact" class="section py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">Contact Me</h2>
-            <form class="contact-form">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Your Name" required>
+            <div class="project-card">
+              <div class="project-image">
+                <img
+                  src="assets/images/project4_grocery_system.png"
+                  onerror="this.onerror=null;this.src='https://placehold.co/400x200/e2e8f0/64748b?text=Grocery%20System';"
+                  alt="Grocery Store Management System Project Image"
+                />
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Grocery Store Management System</h3>
+                <p class="project-description">
+                  Developed a lightweight web application for small-scale
+                  grocery store owners. This system facilitates essential data
+                  operations including CRUD (Create, Read, Update, Delete)
+                  functionalities for products, customer orders, and categories.
+                  The backend was built using Flask and Python, integrated with
+                  a MySQL database, while the frontend utilized Bootstrap for a
+                  responsive user interface.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">Python</span>
+                  <span class="tag">Flask</span>
+                  <span class="tag">MySQL</span>
+                  <span class="tag">Web Development</span>
                 </div>
-                <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Your Email" required>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" placeholder="Your Message" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Send</button>
-            </form>
-        </div>
-    </section>
-
-    <footer class="bg-dark text-white text-center py-3">
-        <div class="container">
-            <p>© 2024 Kirtan Parekh. All Rights Reserved.</p>
-            <div class="social-icons mt-3">
-                <a href="https://linkedin.com" class="text-white mx-3"><i class="fab fa-linkedin fa-2x"></i></a>
-                <a href="https://github.com" class="text-white mx-3"><i class="fab fa-github fa-2x"></i></a>
-                <a href="https://twitter.com" class="text-white mx-3"><i class="fab fa-twitter fa-2x"></i></a>
+                <a href="#" class="btn">View Project</a>
+              </div>
             </div>
-            <a href="#" class="btn btn-light mt-3">Back to Top</a>
+
+            <div class="project-card">
+              <div class="project-image">
+                <img
+                  src="assets/images/project5_mental_fitness.png"
+                  onerror="this.onerror=null;this.src='https://placehold.co/400x200/e2e8f0/64748b?text=Mental%20Fitness';"
+                  alt="Mental Fitness Tracker Project Image"
+                />
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">
+                  Mental Fitness Tracker (AI Intern Project)
+                </h3>
+                <p class="project-description">
+                  As part of an AI internship, I developed a "Mental Fitness
+                  Tracker" project. This involved training regression models on
+                  mental health data collected from over 150 countries between
+                  1990 and 2020, with DALY (Disability-Adjusted Life Years) as
+                  the target variable. A Linear Regression model performed best,
+                  achieving an R² score of 0.76 after cross-validation,
+                  demonstrating effective predictive modeling in public health
+                  data.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">Python</span>
+                  <span class="tag">Machine Learning</span>
+                  <span class="tag">Regression</span>
+                  <span class="tag">Data Analysis</span>
+                  <span class="tag">Public Health Data</span>
+                </div>
+                <a href="#" class="btn">View Project</a>
+              </div>
+            </div>
+          </div>
+          <button class="slider-nav-btn right" aria-label="Next Project">
+            <i class="fas fa-chevron-right"></i>
+          </button>
         </div>
+      </div>
+    </section>
+
+    <section id="skills" class="skills">
+      <div class="container">
+        <h2>My Core Competencies</h2>
+        <p class="section-description">
+          The technologies, tools, and methodologies I leverage
+        </p>
+
+        <div class="skills-slider-container">
+          <button class="slider-nav-btn left" aria-label="Previous Skill">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="skills-slider-wrapper">
+            <div class="skill-card">
+              <h3>Programming & Core Libraries</h3>
+              <div class="skill-icons">
+                <span class="icon-wrapper">
+                  <i class="fab fa-python"></i>
+                  <span>Python</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fab fa-java"></i>
+                  <span>Java</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-code"></i>
+                  <span>C/C++</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-calculator"></i>
+                  <span>NumPy</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-table"></i>
+                  <span>Pandas</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-chart-line"></i>
+                  <span>Matplotlib</span>
+                </span>
+              </div>
+            </div>
+            <div class="skill-card">
+              <h3>Machine Learning & AI</h3>
+              <div class="skill-icons">
+                <span class="icon-wrapper">
+                  <i class="fas fa-brain"></i>
+                  <span>Machine Learning</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-atom"></i>
+                  <span>Deep Learning</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-robot"></i>
+                  <span>AI Fundamentals</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-flask"></i>
+                  <span>Scikit-learn</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-chart-line"></i>
+                  <span>Regression</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-tags"></i>
+                  <span>Classification</span>
+                </span>
+              </div>
+            </div>
+            <div class="skill-card">
+              <h3>Data & Databases</h3>
+              <div class="skill-icons">
+                <span class="icon-wrapper">
+                  <i class="fas fa-database"></i>
+                  <span>MySQL</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-chart-area"></i>
+                  <span>Data Analysis</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-sitemap"></i>
+                  <span>Data Structures</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-gears"></i> <span>Algorithms</span>
+                </span>
+                <span class="icon-wrapper eda-icon">
+                  <span>EDA</span>
+                </span>
+              </div>
+            </div>
+            <div class="skill-card">
+              <h3>Mathematics & Statistics</h3>
+              <div class="skill-icons">
+                <span class="icon-wrapper">
+                  <i class="fas fa-square-root-variable"></i>
+                  <span>Calculus</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-chart-column"></i>
+                  <span>Statistics</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-dice"></i>
+                  <span>Probability</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-vector-square"></i>
+                  <span>Linear Algebra</span>
+                </span>
+              </div>
+            </div>
+            <div class="skill-card">
+              <h3>Tools & Methodologies</h3>
+              <div class="skill-icons">
+                <span class="icon-wrapper">
+                  <i class="fab fa-git-alt"></i>
+                  <span>Git</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fab fa-github"></i>
+                  <span>GitHub</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-terminal"></i>
+                  <span>VS Code</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-people-arrows"></i>
+                  <span>Agile</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-lightbulb"></i>
+                  <span>Problem Solving</span>
+                </span>
+                <span class="icon-wrapper">
+                  <i class="fas fa-users"></i>
+                  <span>Teamwork</span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <button class="slider-nav-btn right" aria-label="Next Skill">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="education" class="education">
+      <div class="container">
+        <h2>My Education</h2>
+        <p class="section-description">
+          Academic journey and foundational knowledge
+        </p>
+
+        <div class="education-grid">
+          <div class="education-card">
+            <h3>Master of Science in Data Science</h3>
+            <span class="degree">GPA: 4.0</span>
+            <span class="university">DePaul University</span>
+            <span class="duration">Aug 2024 - June 2026 (Expected)</span>
+            <ul>
+              <li>
+                Relevant Coursework: Python Programming, Data Analysis and
+                Regression, Data Science Fundamentals, Databases for Analytics.
+              </li>
+            </ul>
+          </div>
+          <div class="education-card">
+            <h3>Bachelor of Engineering in Computer Engineering</h3>
+            <span class="degree">CGPA: 8.89/10.0</span>
+            <span class="university">CVM University</span>
+            <span class="duration">June 2020 - June 2024</span>
+            <ul>
+              <li>
+                Relevant Coursework: Python for Data Science, Data Structures &
+                Algorithms, Database Management Systems, Machine Learning,
+                Calculus, Statistics and Probability.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <h2>Get In Touch</h2>
+        <p class="section-description">
+          Have a project in mind or want to connect? Let's collaborate!
+        </p>
+
+        <div class="contact-form">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Your Name" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Your Email" />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Your Message"></textarea>
+          </div>
+          <button type="submit" class="btn">Send Message</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="social-links">
+          <a
+            href="https://www.linkedin.com/in/kirtan-s-parekh/"
+            aria-label="LinkedIn"
+            target="_blank"
+            ><i class="fab fa-linkedin-in"></i
+          ></a>
+          <a
+            href="https://github.com/bdk-333"
+            aria-label="GitHub"
+            target="_blank"
+            ><i class="fab fa-github"></i
+          ></a>
+          <a
+            href="https://www.kaggle.com/blackdragonk333"
+            aria-label="Kaggle"
+            target="_blank"
+            ><i class="fab fa-kaggle"></i
+          ></a>
+        </div>
+        <p class="copyright">
+          &copy; <span id="currentYear"></span> Kirtankumar Parekh. All rights
+          reserved.
+        </p>
+      </div>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
-</body>
+    <script src="js/script.js"></script>
+  </body>
 </html>
