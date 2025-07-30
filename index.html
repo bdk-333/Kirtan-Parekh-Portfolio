@@ -33,10 +33,7 @@
       <div class="container">
         <nav>
           <a href="#" class="logo">
-            <img
-              src="assets/images/updated_logo - Copy.png"
-              alt="KP Logo"
-            />
+            <img src="assets/images/updated_logo - Copy.png" alt="KP Logo" />
           </a>
 
           <div class="nav-links">
@@ -72,8 +69,8 @@
         <div class="hero-content">
           <h1>Hi, I'm Kirtankumar Parekh</h1>
           <p>
-            Motivated Data Science grad student passionate about leveraging
-            data to solve complex problems and drive insights.
+            Motivated Data Science grad student passionate about leveraging data
+            to solve complex problems and drive insights.
           </p>
           <div class="hero-btns">
             <a href="#projects" class="btn">View My Projects</a>
@@ -572,7 +569,7 @@
           Have a project in mind or want to connect? Let's collaborate!
         </p>
 
-        <div class="contact-form">
+        <!-- <div class="contact-form">
           <div class="form-group">
             <label for="name">Name</label>
             <input type="text" id="name" placeholder="Your Name" />
@@ -586,7 +583,44 @@
             <textarea id="message" placeholder="Your Message"></textarea>
           </div>
           <button type="submit" class="btn">Send Message</button>
-        </div>
+        </div> -->
+
+        <form
+          class="contact-form"
+          action="https://formspree.io/f/mvgqqkaq"
+          method="POST"
+        >
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Your Name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="_replyto"
+              placeholder="Your Email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Your Message"
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
       </div>
     </section>
 
