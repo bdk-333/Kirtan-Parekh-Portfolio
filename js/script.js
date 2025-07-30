@@ -4,23 +4,6 @@ const mobileMenu = document.getElementById('mobileMenu');
 const mobileMenuLinks = mobileMenu.querySelectorAll('a');
 const currentYearSpan = document.getElementById('currentYear');
 
-// Get references for the project slider
-const projectsSliderWrapper = document.querySelector('.projects-slider-wrapper');
-const projectsLeftArrowBtn = document.querySelector('#projects .slider-nav-btn.left');
-const projectsRightArrowBtn = document.querySelector('#projects .slider-nav-btn.right');
-
-// Get references for the skills slider
-const skillsSliderWrapper = document.querySelector('.skills-slider-wrapper');
-const skillsLeftArrowBtn = document.querySelector('#skills .slider-nav-btn.left');
-const skillsRightArrowBtn = document.querySelector('#skills .slider-nav-btn.right');
-
-
-// Variables for drag functionality
-let isDown = false;
-let startX;
-let scrollLeft;
-let activeSlider = null; // To keep track of which slider is being dragged
-
 // Function to toggle the mobile menu
 function toggleMobileMenu() {
     mobileMenuBtn.classList.toggle('active');
@@ -59,98 +42,219 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Generic Slider Navigation Function
-function scrollSlider(sliderWrapper, direction) {
-    const card = sliderWrapper.querySelector('.project-card') || sliderWrapper.querySelector('.skill-card');
-    if (!card) return; // Exit if no card found
-    const cardWidth = card.offsetWidth;
-    const gap = parseFloat(getComputedStyle(sliderWrapper).gap); // Get the actual gap value
-    const scrollAmount = cardWidth + gap;
 
-    if (direction === 'left') {
-        sliderWrapper.scrollBy({
-            left: -scrollAmount,
-            behavior: 'smooth'
+// --- New Slider Class Implementation ---
+class Slider {
+    constructor(wrapperSelector, prevBtnSelector, nextBtnSelector, cardSelector) {
+        this.sliderWrapper = document.querySelector(wrapperSelector);
+        this.prevBtn = document.querySelector(prevBtnSelector);
+        this.nextBtn = document.querySelector(nextBtnSelector);
+        this.cardSelector = cardSelector; // Selector for individual cards within the wrapper
+
+        if (!this.sliderWrapper || !this.prevBtn || !this.nextBtn) {
+            console.error('One or more slider elements not found for:', wrapperSelector);
+            return;
+        }
+
+        this.cards = Array.from(this.sliderWrapper.querySelectorAll(this.cardSelector));
+        this.cardWidth = 0; // Will be calculated dynamically
+        this.gap = 0; // Will be calculated dynamically
+        this.visibleCards = 0; // Number of cards visible at once
+        this.totalCards = this.cards.length;
+
+        this.isDown = false;
+        this.startX;
+        this.scrollLeft;
+        this.activeSlider = null; // To keep track of which slider is being dragged
+
+        this.init();
+    }
+
+    init() {
+        this.calculateCardDimensions();
+        this.cloneCards();
+        this.setupEventListeners();
+        // Initial scroll to the start of the "real" content
+        this.sliderWrapper.scrollLeft = this.getClonedCount() * (this.cardWidth + this.gap);
+    }
+
+    calculateCardDimensions() {
+        if (this.cards.length === 0) return;
+        const firstCard = this.cards[0];
+        this.cardWidth = firstCard.offsetWidth;
+        // Get the computed gap from the wrapper's style
+        this.gap = parseFloat(getComputedStyle(this.sliderWrapper).gap);
+
+        // Calculate how many cards are visible
+        const wrapperWidth = this.sliderWrapper.offsetWidth;
+        this.visibleCards = Math.floor(wrapperWidth / (this.cardWidth + this.gap));
+        // Ensure at least one card is visible
+        if (this.visibleCards === 0 && this.cardWidth > 0) {
+            this.visibleCards = 1;
+        }
+    }
+
+    cloneCards() {
+        // Clear any existing clones first to prevent duplicates on re-init
+        this.sliderWrapper.querySelectorAll('.clone').forEach(clone => clone.remove());
+
+        // Clone enough cards from the end to fill the visible area and prepend them
+        // This ensures a smooth transition when scrolling left from the beginning
+        const clonedEndCount = Math.min(this.visibleCards + 1, this.totalCards); // Clone at least visibleCards + 1 for smooth loop
+        const clonedEnd = this.cards.slice(-clonedEndCount).map(card => {
+            const clone = card.cloneNode(true);
+            clone.classList.add('clone');
+            return clone;
         });
-    } else {
-        sliderWrapper.scrollBy({
-            left: scrollAmount,
-            behavior: 'smooth'
+        clonedEnd.reverse().forEach(clone => this.sliderWrapper.prepend(clone));
+
+        // Clone enough cards from the beginning to fill the visible area and append them
+        // This ensures a smooth transition when scrolling right from the end
+        const clonedStartCount = Math.min(this.visibleCards + 1, this.totalCards); // Clone at least visibleCards + 1 for smooth loop
+        const clonedStart = this.cards.slice(0, clonedStartCount).map(card => {
+            const clone = card.cloneNode(true);
+            clone.classList.add('clone');
+            return clone;
         });
+        clonedStart.forEach(clone => this.sliderWrapper.append(clone));
+
+        this.clonedCount = clonedEndCount; // The number of cards cloned at the beginning (and end)
+    }
+
+    setupEventListeners() {
+        this.prevBtn.addEventListener('click', () => this.scrollSlider('left'));
+        this.nextBtn.addEventListener('click', () => this.scrollSlider('right'));
+
+        this.sliderWrapper.addEventListener('scroll', () => this.handleScroll());
+        this.sliderWrapper.addEventListener('mousedown', this.handleMouseDown.bind(this));
+        this.sliderWrapper.addEventListener('mouseleave', this.handleMouseUp.bind(this)); // Use mouseup for leave
+        this.sliderWrapper.addEventListener('mouseup', this.handleMouseUp.bind(this));
+        this.sliderWrapper.addEventListener('mousemove', this.handleMouseMove.bind(this));
+
+        this.sliderWrapper.addEventListener('touchstart', this.handleTouchStart.bind(this));
+        this.sliderWrapper.addEventListener('touchend', this.handleTouchEnd.bind(this));
+        this.sliderWrapper.addEventListener('touchmove', this.handleTouchMove.bind(this));
+
+        // Recalculate dimensions and re-clone on resize
+        window.addEventListener('resize', () => {
+            this.calculateCardDimensions();
+            this.cloneCards(); // Re-clone to adjust for new visibleCards count
+            this.sliderWrapper.scrollLeft = this.getClonedCount() * (this.cardWidth + this.gap);
+        });
+    }
+
+    getClonedCount() {
+        // Returns the number of cards cloned at the beginning (which is also used for the end)
+        return Math.min(this.visibleCards + 1, this.totalCards);
+    }
+
+    scrollSlider(direction) {
+        const scrollAmount = this.cardWidth + this.gap;
+        if (direction === 'left') {
+            this.sliderWrapper.scrollBy({
+                left: -scrollAmount,
+                behavior: 'smooth'
+            });
+        } else {
+            this.sliderWrapper.scrollBy({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    handleScroll() {
+        const scrollLeft = this.sliderWrapper.scrollLeft;
+        const singleCardScroll = this.cardWidth + this.gap;
+        const clonedCount = this.getClonedCount();
+
+        const firstRealCardScrollPos = clonedCount * singleCardScroll;
+        // The position where the appended clones *start*
+        const startOfAppendedClonesPos = (clonedCount + this.totalCards) * singleCardScroll;
+
+        // If scrolled past the *start* of the real content into the prepended clones (left side)
+        if (scrollLeft < firstRealCardScrollPos) {
+            // Disable smooth scrolling and snap-type for instant jump
+            this.sliderWrapper.style.scrollBehavior = 'auto';
+            this.sliderWrapper.style.scrollSnapType = 'none';
+
+            // Jump to the corresponding position at the end of the real content
+            this.sliderWrapper.scrollLeft = startOfAppendedClonesPos - (this.visibleCards * singleCardScroll); // Adjust to land on the last real card
+            
+            // Re-enable after a very short delay to allow the browser to process the jump
+            requestAnimationFrame(() => {
+                this.sliderWrapper.style.scrollBehavior = 'smooth';
+                this.sliderWrapper.style.scrollSnapType = 'x mandatory';
+            });
+        }
+        // If scrolled past the *end* of the real content into the appended clones (right side)
+        else if (scrollLeft >= startOfAppendedClonesPos) { // Check if the left edge of the view has passed the start of appended clones
+            // Disable smooth scrolling and snap-type for instant jump
+            this.sliderWrapper.style.scrollBehavior = 'auto';
+            this.sliderWrapper.style.scrollSnapType = 'none';
+
+            // Jump back to the beginning of the real content
+            this.sliderWrapper.scrollLeft = firstRealCardScrollPos;
+            
+            // Re-enable after a very short delay to allow the browser to process the jump
+            requestAnimationFrame(() => {
+                this.sliderWrapper.style.scrollBehavior = 'smooth';
+                this.sliderWrapper.style.scrollSnapType = 'x mandatory';
+            });
+        }
+    }
+
+    // Mouse Drag Handlers
+    handleMouseDown(e) {
+        this.isDown = true;
+        this.activeSlider = this.sliderWrapper;
+        this.sliderWrapper.classList.add('active-drag');
+        this.startX = e.pageX - this.sliderWrapper.offsetLeft;
+        this.scrollLeft = this.sliderWrapper.scrollLeft;
+    }
+
+    handleMouseUp() {
+        if (this.activeSlider === this.sliderWrapper) {
+            this.isDown = false;
+            this.sliderWrapper.classList.remove('active-drag');
+            this.activeSlider = null;
+        }
+    }
+
+    handleMouseMove(e) {
+        if (!this.isDown || this.activeSlider !== this.sliderWrapper) return;
+        e.preventDefault();
+        const x = e.pageX - this.sliderWrapper.offsetLeft;
+        const walk = (x - this.startX) * 1.5; // Adjust sensitivity
+        this.sliderWrapper.scrollLeft = this.scrollLeft - walk;
+    }
+
+    // Touch Drag Handlers
+    handleTouchStart(e) {
+        this.isDown = true;
+        this.activeSlider = this.sliderWrapper;
+        this.startX = e.touches[0].pageX - this.sliderWrapper.offsetLeft;
+        this.scrollLeft = this.sliderWrapper.scrollLeft;
+    }
+
+    handleTouchEnd() {
+        if (this.activeSlider === this.sliderWrapper) {
+            this.isDown = false;
+            this.activeSlider = null;
+        }
+    }
+
+    handleTouchMove(e) {
+        if (!this.isDown || this.activeSlider !== this.sliderWrapper) return;
+        const x = e.touches[0].pageX - this.sliderWrapper.offsetLeft;
+        const walk = (x - this.startX) * 1.5; // Adjust sensitivity
+        this.sliderWrapper.scrollLeft = this.scrollLeft - walk;
     }
 }
 
-// Event listeners for Project Slider navigation buttons
-projectsLeftArrowBtn.addEventListener('click', () => scrollSlider(projectsSliderWrapper, 'left'));
-projectsRightArrowBtn.addEventListener('click', () => scrollSlider(projectsSliderWrapper, 'right'));
-
-// Event listeners for Skills Slider navigation buttons
-skillsLeftArrowBtn.addEventListener('click', () => scrollSlider(skillsSliderWrapper, 'left'));
-skillsRightArrowBtn.addEventListener('click', () => scrollSlider(skillsSliderWrapper, 'right'));
-
-
-// Generic Mouse/Touch Drag functionality for sliders
-function addDragListeners(sliderWrapper) {
-    sliderWrapper.addEventListener('mousedown', (e) => {
-        isDown = true;
-        activeSlider = sliderWrapper;
-        sliderWrapper.classList.add('active-drag');
-        startX = e.pageX - sliderWrapper.offsetLeft;
-        scrollLeft = sliderWrapper.scrollLeft;
-    });
-
-    sliderWrapper.addEventListener('mouseleave', () => {
-        if (activeSlider === sliderWrapper) {
-            isDown = false;
-            sliderWrapper.classList.remove('active-drag');
-            activeSlider = null;
-        }
-    });
-
-    sliderWrapper.addEventListener('mouseup', () => {
-        if (activeSlider === sliderWrapper) {
-            isDown = false;
-            sliderWrapper.classList.remove('active-drag');
-            activeSlider = null;
-        }
-    });
-
-    sliderWrapper.addEventListener('mousemove', (e) => {
-        if (!isDown || activeSlider !== sliderWrapper) return;
-        e.preventDefault();
-        const x = e.pageX - sliderWrapper.offsetLeft;
-        const walk = (x - startX) * 1.5;
-        sliderWrapper.scrollLeft = scrollLeft - walk;
-    });
-
-    sliderWrapper.addEventListener('touchstart', (e) => {
-        isDown = true;
-        activeSlider = sliderWrapper;
-        startX = e.touches[0].pageX - sliderWrapper.offsetLeft;
-        scrollLeft = sliderWrapper.scrollLeft;
-    });
-
-    sliderWrapper.addEventListener('touchend', () => {
-        if (activeSlider === sliderWrapper) {
-            isDown = false;
-            activeSlider = null;
-        }
-    });
-
-    sliderWrapper.addEventListener('touchmove', (e) => {
-        if (!isDown || activeSlider !== sliderWrapper) return;
-        const x = e.touches[0].pageX - sliderWrapper.offsetLeft;
-        const walk = (x - startX) * 1.5;
-        sliderWrapper.scrollLeft = scrollLeft - walk;
-    });
-}
-
-// Apply drag listeners to both sliders
-addDragListeners(projectsSliderWrapper);
-addDragListeners(skillsSliderWrapper);
-
-// Hide loader overlay when the page is fully loaded
+// --- Initialize Sliders ---
 window.addEventListener('load', () => {
+    // Hide loader overlay when the page is fully loaded
     const loaderOverlay = document.getElementById('loader-overlay');
     if (loaderOverlay) {
         loaderOverlay.style.opacity = '0';
@@ -158,4 +262,20 @@ window.addEventListener('load', () => {
             loaderOverlay.style.visibility = 'hidden';
         });
     }
+
+    // Initialize Projects Slider
+    new Slider(
+        '.projects-slider-wrapper',
+        '#projects .slider-nav-btn.left',
+        '#projects .slider-nav-btn.right',
+        '.project-card'
+    );
+
+    // Initialize Skills Slider
+    new Slider(
+        '.skills-slider-wrapper',
+        '#skills .slider-nav-btn.left',
+        '#skills .slider-nav-btn.right',
+        '.skill-card'
+    );
 });
