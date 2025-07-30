@@ -403,7 +403,7 @@ p {
 
 /* Ensure individual cards maintain their size and don't shrink too much */
 .education-card {
-    flex: 0 0 350px; /* Fixed width for education cards, allow no shrinking/growing */
+    flex: 0 0 420px; /* Increased width for education cards */
     max-width: 100%; /* Ensure it doesn't overflow on small screens */
     /* Remove scroll-snap-align as it's no longer a slider */
     scroll-snap-align: none; /* Revert snap alignment */
@@ -507,10 +507,15 @@ p {
 
 
 /* Experience Section Styles */
+.experience {
+    background-color: #f1f5f9; /* Added background color for separation */
+}
+
 .experience-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
+    justify-content: center; /* Center items horizontally */
 }
 
 .experience-card {
@@ -519,6 +524,8 @@ p {
     padding: 2rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex: 0 0 420px; /* Increased width for experience cards */
+    max-width: 100%; /* Ensure it doesn't overflow on small screens */
 }
 
 .experience-card:hover {
@@ -722,10 +729,7 @@ p {
 }
 
 .skills-slider-wrapper .skill-card {
-    flex: 0 0 auto;
-    /* Prevent cards from shrinking/growing */
-    width: 350px;
-    /* Fixed width for skill cards in slider */
+    flex: 0 0 420px; /* Increased width for skill cards */
     scroll-snap-align: start;
     /* Snap to the start of each card */
 }
@@ -767,10 +771,7 @@ p {
 }
 
 .project-card {
-    flex: 0 0 auto;
-    /* Prevent cards from shrinking/growing */
-    width: 350px;
-    /* Fixed width for project cards in slider */
+    flex: 0 0 420px; /* Increased width for project cards */
     scroll-snap-align: start;
     /* Snap to the start of each card */
     background-color: white;
@@ -1015,7 +1016,8 @@ footer {
 
     .project-card,
     .skills-slider-wrapper .skill-card,
-    .education-card { /* Added education card to media query */
+    .education-card, /* Added education card to media query */
+    .experience-card { /* Added experience card to media query */
         width: 90%;
         /* Make cards take more width on small screens */
         max-width: 350px;
