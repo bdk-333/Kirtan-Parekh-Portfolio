@@ -266,17 +266,17 @@ class NeuronNetwork {
         this.animationFrameId = null;
 
         this.maxNodes = 100; // Increased max neurons
-        this.initialNodes = 20; // Start with more neurons
+        this.initialNodes = 30; // Start with more neurons
         this.spawnInterval = 1000; // Spawn a new neuron every 1 second initially
         this.lastSpawnTime = Date.now();
-        this.nodeLifespan = 25000; // Neurons live for 25 seconds before dying
+        this.nodeLifespan = 15000; // Neurons live for 25 seconds before dying
 
-        // Neon color palette (similar to the provided image)
+        // Neon color palette (from the provided image, converted to HSL for dynamic use)
         this.colors = [
-            '270, 100%, 70%', // Purple
-            '220, 100%, 70%', // Electric Blue
-            '300, 100%, 70%', // Magenta
-            '180, 100%, 70%'  // Cyan
+            '301, 99%, 71%', // #FC1FF9 (Pink)
+            '278, 99%, 65%', // #BC0EEF (Purple)
+            '0, 78%, 52%',   // #E42536 (Red)
+            '19, 99%, 60%'   // #42fc31ff (Orange)
         ];
 
         this.initCanvas();
@@ -417,9 +417,12 @@ class Node {
         
         // Use the selected HSL color for the glow
         const hue = this.color.split(',')[0];
-        gradient.addColorStop(0, `hsla(${hue}, 100%, 70%, ${this.lightIntensity * 0.6})`);
-        gradient.addColorStop(0.5, `hsla(${hue}, 100%, 70%, ${this.lightIntensity * 0.3})`);
-        gradient.addColorStop(1, `hsla(${hue}, 100%, 70%, 0)`);
+        const saturation = this.color.split(',')[1];
+        const lightness = this.color.split(',')[2];
+
+        gradient.addColorStop(0, `hsla(${hue}, ${saturation}, ${lightness}, ${this.lightIntensity * 0.6})`);
+        gradient.addColorStop(0.5, `hsla(${hue}, ${saturation}, ${lightness}, ${this.lightIntensity * 0.3})`);
+        gradient.addColorStop(1, `hsla(${hue}, ${saturation}, ${lightness}, 0)`);
         
         ctx.fillStyle = gradient;
         ctx.fillRect(this.x - glowRadius, this.y - glowRadius, glowRadius * 2, glowRadius * 2);
@@ -468,8 +471,11 @@ class Connection {
             
             // Use the color of the triggering neuron for the line
             const hue = this.triggerNode.color.split(',')[0];
+            const saturation = this.triggerNode.color.split(',')[1];
+            const lightness = this.triggerNode.color.split(',')[2];
             const alpha = 1 - Math.abs(0.5 - this.propagationProgress) * 2; // Fade in and out
-            ctx.strokeStyle = `hsla(${hue}, 100%, 70%, ${alpha * 0.8})`; // Thin, glowing line
+            
+            ctx.strokeStyle = `hsla(${hue}, ${saturation}, ${lightness}, ${alpha * 0.8})`; // Thin, glowing line
             ctx.lineWidth = 1; // Thinner line
             ctx.stroke();
 
