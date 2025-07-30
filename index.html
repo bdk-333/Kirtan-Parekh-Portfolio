@@ -9,17 +9,18 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;700&family=Open+Sans:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
-    <link
+    <!-- Removed redundant Roboto and Lato as Open Sans and Montserrat will cover their uses -->
+    <!-- <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
       rel="stylesheet"
-    />
+    /> -->
 
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -33,7 +34,10 @@
       <div class="container">
         <nav>
           <a href="#" class="logo">
-            <img src="assets/images/updated_logo - Copy.png" alt="KP Logo" />
+            <img
+              src="assets/images/updated_logo - Copy.png"
+              alt="KP Logo"
+            />
           </a>
 
           <div class="nav-links">
@@ -63,14 +67,16 @@
       <a href="#contact">Contact</a>
     </div>
 
+    <!-- Hero Section -->
     <section class="hero">
       <div class="container">
-        <div class="hero-bg-secondary"></div>
+        <!-- Canvas for the AI/Deep Learning animation -->
+        <canvas id="heroCanvas"></canvas>
         <div class="hero-content">
           <h1>Hi, I'm Kirtankumar Parekh</h1>
           <p>
-            Motivated Data Science grad student passionate about leveraging data
-            to solve complex problems and drive insights.
+            Motivated Data Science grad student passionate about leveraging
+            data to solve complex problems and drive insights.
           </p>
           <div class="hero-btns">
             <a href="#projects" class="btn">View My Projects</a>
@@ -80,6 +86,7 @@
       </div>
     </section>
 
+    <!-- About Section -->
     <section id="about">
       <div class="container">
         <h2>About Me</h2>
@@ -116,6 +123,7 @@
       </div>
     </section>
 
+    <!-- Experience Section -->
     <section id="experience" class="experience">
       <div class="container">
         <h2>My Experience</h2>
@@ -523,8 +531,6 @@
           <button class="slider-nav-btn right" aria-label="Next Skill">
             <i class="fas fa-chevron-right"></i>
           </button>
-          <!-- New: Slider Pagination -->
-          <div class="slider-pagination skills-pagination"></div>
         </div>
       </div>
     </section>
@@ -568,6 +574,7 @@
       </div>
     </section>
 
+    <!-- Contact Section -->
     <section id="contact" class="contact">
       <div class="container">
         <h2>Get In Touch</h2>
@@ -575,39 +582,18 @@
           Have a project in mind or want to connect? Let's collaborate!
         </p>
 
-        <form
-          class="contact-form"
-          action="https://formspree.io/f/mvgqqkaq"
-          method="POST"
-        >
+        <form class="contact-form" action="YOUR_FORMSPREE_URL_HERE" method="POST">
           <div class="form-group">
             <label for="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Your Name"
-              required
-            />
+            <input type="text" id="name" name="name" placeholder="Your Name" required />
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="_replyto"
-              placeholder="Your Email"
-              required
-            />
+            <input type="email" id="email" name="_replyto" placeholder="Your Email" required />
           </div>
           <div class="form-group">
             <label for="message">Message</label>
-            <textarea
-              id="message"
-              name="message"
-              placeholder="Your Message"
-              required
-            ></textarea>
+            <textarea id="message" name="message" placeholder="Your Message" required></textarea>
           </div>
           <button type="submit" class="btn">Send Message</button>
         </form>
