@@ -67,6 +67,10 @@ class Slider {
         this.scrollLeft;
         this.activeSlider = null; // To keep track of which slider is being dragged
 
+        this.autoplayIntervalId = null; // For autoplay functionality
+        this.autoplayDelay = 5000; // 5 seconds delay for autoplay
+        this.isInView = false; // Tracks if the slider section is currently in the viewport
+
         this.init();
     }
 
@@ -76,6 +80,7 @@ class Slider {
         this.setupEventListeners();
         // Initial scroll to the start of the "real" content
         this.sliderWrapper.scrollLeft = this.getClonedCount() * (this.cardWidth + this.gap);
+        this.setupIntersectionObserver(); // Setup observer
     }
 
     calculateCardDimensions() {
@@ -122,8 +127,16 @@ class Slider {
     }
 
     setupEventListeners() {
-        this.prevBtn.addEventListener('click', () => this.scrollSlider('left'));
-        this.nextBtn.addEventListener('click', () => this.scrollSlider('right'));
+        this.prevBtn.addEventListener('click', () => {
+            this.stopAutoplay();
+            this.scrollSlider('left');
+            // Autoplay will restart via IntersectionObserver if out of view, or on mouseup/touchend if in view
+        });
+        this.nextBtn.addEventListener('click', () => {
+            this.stopAutoplay();
+            this.scrollSlider('right');
+            // Autoplay will restart via IntersectionObserver if out of view, or on mouseup/touchend if in view
+        });
 
         this.sliderWrapper.addEventListener('scroll', () => this.handleScroll());
         this.sliderWrapper.addEventListener('mousedown', this.handleMouseDown.bind(this));
@@ -140,7 +153,39 @@ class Slider {
             this.calculateCardDimensions();
             this.cloneCards(); // Re-clone to adjust for new visibleCards count
             this.sliderWrapper.scrollLeft = this.getClonedCount() * (this.cardWidth + this.gap);
+            this.updateActiveSlide(); // Update active slide on resize
         });
+    }
+
+    setupIntersectionObserver() {
+        const observerOptions = {
+            root: null, // Use the viewport as the root
+            rootMargin: '0px',
+            threshold: 0.5 // Trigger when 50% of the slider is visible
+        };
+
+        this.observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                this.isInView = entry.isIntersecting;
+                if (this.isInView) {
+                    this.stopAutoplay(); // Pause if in view
+                    this.updateActiveSlide(); // Ensure active slide is set when entering view
+                } else {
+                    this.startAutoplay(); // Resume if out of view
+                }
+            });
+        }, observerOptions);
+
+        // Observe the parent section of the slider wrapper, not just the wrapper itself
+        // This ensures autoplay pauses when the *entire section* is visible
+        const parentSection = this.sliderWrapper.closest('section');
+        if (parentSection) {
+            this.observer.observe(parentSection);
+        } else {
+            // Fallback: if no parent section, just observe the wrapper and autoplay always
+            this.observer.observe(this.sliderWrapper);
+            this.startAutoplay();
+        }
     }
 
     getClonedCount() {
@@ -169,43 +214,81 @@ class Slider {
         const clonedCount = this.getClonedCount();
 
         const firstRealCardScrollPos = clonedCount * singleCardScroll;
-        // The position where the appended clones *start*
         const startOfAppendedClonesPos = (clonedCount + this.totalCards) * singleCardScroll;
 
         // If scrolled past the *start* of the real content into the prepended clones (left side)
         if (scrollLeft < firstRealCardScrollPos) {
-            // Disable smooth scrolling and snap-type for instant jump
             this.sliderWrapper.style.scrollBehavior = 'auto';
             this.sliderWrapper.style.scrollSnapType = 'none';
-
-            // Jump to the corresponding position at the end of the real content
-            this.sliderWrapper.scrollLeft = startOfAppendedClonesPos - (this.visibleCards * singleCardScroll); // Adjust to land on the last real card
-            
-            // Re-enable after a very short delay to allow the browser to process the jump
+            this.sliderWrapper.scrollLeft = startOfAppendedClonesPos - (this.visibleCards * singleCardScroll);
             requestAnimationFrame(() => {
                 this.sliderWrapper.style.scrollBehavior = 'smooth';
                 this.sliderWrapper.style.scrollSnapType = 'x mandatory';
             });
         }
         // If scrolled past the *end* of the real content into the appended clones (right side)
-        else if (scrollLeft >= startOfAppendedClonesPos) { // Check if the left edge of the view has passed the start of appended clones
-            // Disable smooth scrolling and snap-type for instant jump
+        else if (scrollLeft >= startOfAppendedClonesPos) {
             this.sliderWrapper.style.scrollBehavior = 'auto';
             this.sliderWrapper.style.scrollSnapType = 'none';
-
-            // Jump back to the beginning of the real content
             this.sliderWrapper.scrollLeft = firstRealCardScrollPos;
-            
-            // Re-enable after a very short delay to allow the browser to process the jump
             requestAnimationFrame(() => {
                 this.sliderWrapper.style.scrollBehavior = 'smooth';
                 this.sliderWrapper.style.scrollSnapType = 'x mandatory';
             });
         }
+        this.updateActiveSlide(); // Update active slide on scroll
+    }
+
+    updateActiveSlide() {
+        const scrollLeft = this.sliderWrapper.scrollLeft;
+        const singleCardScroll = this.cardWidth + this.gap;
+        const clonedCount = this.getClonedCount();
+
+        // Calculate the logical index relative to the *real* cards
+        let currentLogicalScroll = scrollLeft - (clonedCount * singleCardScroll);
+        // Handle cases where scroll might briefly be in the cloned sections before the jump
+        if (currentLogicalScroll < 0) {
+            currentLogicalScroll += this.totalCards * singleCardScroll;
+        } else if (currentLogicalScroll >= this.totalCards * singleCardScroll) {
+            currentLogicalScroll -= this.totalCards * singleCardScroll;
+        }
+
+        const newIndex = Math.round(currentLogicalScroll / singleCardScroll);
+        
+        // Ensure index is within valid bounds (0 to totalCards - 1)
+        const clampedIndex = Math.max(0, Math.min(newIndex, this.totalCards - 1));
+
+        if (this.currentIndex !== clampedIndex) {
+            // Remove active class from previous active card
+            if (this.cards[this.currentIndex]) {
+                this.cards[this.currentIndex].classList.remove('active-slide');
+            }
+            // Add active class to new active card
+            this.currentIndex = clampedIndex;
+            if (this.cards[this.currentIndex]) {
+                this.cards[this.currentIndex].classList.add('active-slide');
+            }
+        }
+    }
+
+    startAutoplay() {
+        if (!this.isInView && !this.autoplayIntervalId) { // Only start if out of view and not already running
+            this.autoplayIntervalId = setInterval(() => {
+                this.scrollSlider('right');
+            }, this.autoplayDelay);
+        }
+    }
+
+    stopAutoplay() {
+        if (this.autoplayIntervalId) {
+            clearInterval(this.autoplayIntervalId);
+            this.autoplayIntervalId = null;
+        }
     }
 
     // Mouse Drag Handlers
     handleMouseDown(e) {
+        this.stopAutoplay(); // Stop autoplay on user interaction
         this.isDown = true;
         this.activeSlider = this.sliderWrapper;
         this.sliderWrapper.classList.add('active-drag');
@@ -218,6 +301,9 @@ class Slider {
             this.isDown = false;
             this.sliderWrapper.classList.remove('active-drag');
             this.activeSlider = null;
+            if (!this.isInView) { // Only restart if out of view
+                 this.startAutoplay();
+            }
         }
     }
 
@@ -231,6 +317,7 @@ class Slider {
 
     // Touch Drag Handlers
     handleTouchStart(e) {
+        this.stopAutoplay(); // Stop autoplay on user interaction
         this.isDown = true;
         this.activeSlider = this.sliderWrapper;
         this.startX = e.touches[0].pageX - this.sliderWrapper.offsetLeft;
@@ -241,6 +328,9 @@ class Slider {
         if (this.activeSlider === this.sliderWrapper) {
             this.isDown = false;
             this.activeSlider = null;
+            if (!this.isInView) { // Only restart if out of view
+                this.startAutoplay();
+            }
         }
     }
 
@@ -276,7 +366,7 @@ class NeuronNetwork {
             '301, 99%, 71%', // #FC1FF9 (Pink)
             '278, 99%, 65%', // #BC0EEF (Purple)
             '0, 78%, 52%',   // #E42536 (Red)
-            '19, 99%, 60%'   // #42fc31ff (Orange)
+            '19, 99%, 60%'   // #FC5E31 (Orange)
         ];
 
         this.initCanvas();
