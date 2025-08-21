@@ -358,6 +358,72 @@ nav {
     margin-left: 1rem;
 }
 
+.hero-btns {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.hero-btns .btn:not(.btn-resume) {
+    flex: 1;
+    max-width: 200px;
+}
+
+/* Resume button styling - distinct but cohesive */
+.btn-resume {
+    background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+    /* Periodic glowing outline effect similar to hero name */
+    box-shadow: 
+        0 0 0 2px rgba(255, 255, 255, 0.3),
+        0 0 10px rgba(255, 255, 255, 0.2),
+        0 4px 15px rgba(252, 31, 249, 0.3);
+    margin-left: auto;
+    transition: all 0.3s ease, box-shadow 0.3s ease;
+    animation: resumeGlow 2s ease-in-out infinite alternate;
+}
+
+.btn-resume::before {
+    background: linear-gradient(45deg, var(--neon-cyan), var(--neon-blue-violet), var(--neon-magenta), var(--neon-cyan));
+    background-size: 300% 300%;
+    animation: gradientBG 3s ease infinite;
+}
+
+.btn-resume:hover {
+    transform: translateY(-2px);
+    /* High glow on hover - stronger outline and glow */
+    box-shadow: 
+        0 0 0 4px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.6),
+        0 0 30px rgba(255, 255, 255, 0.4),
+        0 6px 20px rgba(252, 31, 249, 0.5);
+    animation: none; /* Stop the periodic animation on hover */
+}
+
+.btn-resume:hover::before {
+    opacity: 1;
+}
+
+/* Periodic glow animation for resume button */
+@keyframes resumeGlow {
+    from {
+        box-shadow: 
+            0 0 0 2px rgba(255, 255, 255, 0.3),
+            0 0 10px rgba(255, 255, 255, 0.2),
+            0 4px 15px rgba(252, 31, 249, 0.3);
+    }
+    to {
+        box-shadow: 
+            0 0 0 2px rgba(255, 255, 255, 0.5),
+            0 0 15px rgba(255, 255, 255, 0.4),
+            0 4px 15px rgba(252, 31, 249, 0.3);
+    }
+}
+
 section {
     padding: 5rem 0;
 }
@@ -407,13 +473,11 @@ p {
 
 
 /* Education Section Styles */
-/* Reverted to a flex container for centering, not a slider */
 .education-grid {
     display: flex;
     flex-wrap: wrap; /* Allow items to wrap to next line */
     justify-content: center; /* Center items horizontally when there's space */
     gap: 2rem; /* Keep the gap between cards */
-    /* Remove slider-specific overflow and scrollbar styles */
     overflow-x: visible; /* Ensure it doesn't scroll horizontally */
     scrollbar-width: auto; /* Revert scrollbar hiding */
     -ms-overflow-style: auto; /* Revert scrollbar hiding */
@@ -425,8 +489,6 @@ p {
 .education-card {
     flex: 0 0 420px; /* Increased width for education cards */
     max-width: 100%; /* Ensure it doesn't overflow on small screens */
-    /* Remove scroll-snap-align as it's no longer a slider */
-    scroll-snap-align: none; /* Revert snap alignment */
     background-color: white;
     border-radius: 0.5rem;
     padding: 2rem;
@@ -605,8 +667,9 @@ p {
 
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
     gap: 2rem;
+    justify-content: center;
 }
 
 .skill-card {
@@ -616,12 +679,9 @@ p {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
-    /* Use flexbox for vertical alignment */
     flex-direction: column;
     align-items: center;
-    /* Center content horizontally */
     text-align: center;
-    /* Center text */
 }
 
 .skill-card:hover {
@@ -633,7 +693,7 @@ p {
     font-size: 1.5rem;
     margin-bottom: 1rem;
     color: var(--dark);
-    line-height: 1.3; /* Adjusted line height for titles */
+    line-height: 1.3;
 }
 
 /* New styles for skill icons */
@@ -641,12 +701,9 @@ p {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    /* Spacing between icons */
     margin-top: 1rem;
     justify-content: center;
-    /* Center icons within the card */
     align-items: flex-start;
-    /* Align items to the start of the cross axis */
 }
 
 .skill-icons .icon-wrapper {
@@ -655,10 +712,8 @@ p {
     align-items: center;
     text-decoration: none;
     color: var(--secondary);
-    /* Default icon color */
     transition: all 0.3s ease;
     font-size: 2.5rem;
-    /* Icon size */
     position: relative;
     padding: 0.5rem;
     border-radius: 0.5rem;
@@ -671,7 +726,6 @@ p {
 
 .skill-icons .icon-wrapper i {
     font-size: inherit;
-    /* Inherit size from parent */
     transition: color 0.3s ease;
 }
 
@@ -679,141 +733,94 @@ p {
     font-size: 0.8rem;
     margin-top: 0.5rem;
     text-align: center;
-    color: var(--dark); /* Keep text dark for readability */
+    color: var(--dark);
     transition: color 0.3s ease;
 }
 
 /* Refined Gradient hover effect for icons */
 .skill-icons .icon-wrapper:hover i {
     color: transparent;
-    /* Using a darker, more vibrant gradient for better contrast */
-    background: linear-gradient(to right, var(--neon-blue-violet), var(--neon-magenta)); /* Updated to new neon colors */
+    background: linear-gradient(to right, var(--neon-blue-violet), var(--neon-magenta));
     -webkit-background-clip: text;
     background-clip: text;
 }
+
 /* Ensure the span text remains readable on hover */
 .skill-icons .icon-wrapper:hover span {
-    color: var(--dark); /* Keep text dark for readability */
-    background: none; /* Remove background clip from text on hover */
+    color: var(--dark);
+    background: none;
     -webkit-background-clip: unset;
 }
 
-
 /* Specific style for hollow EDA text */
 .skill-icons .icon-wrapper.eda-icon span {
-    font-size: 2.5rem; /* Make text size comparable to icon size */
-    font-weight: 900; /* Make it bold for better hollow effect */
-    -webkit-text-stroke: 1.5px var(--secondary); /* Hollow effect */
-    color: transparent; /* Make text transparent to show stroke */
-    background: none; /* Ensure no background on initial state */
-    -webkit-background-clip: unset; /* Reset clip for initial state */
-    transition: all 0.3s ease; /* Ensure smooth transition */
+    font-size: 2.5rem;
+    font-weight: 900;
+    -webkit-text-stroke: 1.5px var(--secondary);
+    color: transparent;
+    background: none;
+    -webkit-background-clip: unset;
+    transition: all 0.3s ease;
 }
 
 .skill-icons .icon-wrapper.eda-icon:hover span {
-    -webkit-text-stroke: 1.5px transparent; /* Remove stroke on hover */
-    color: transparent; /* Keep text transparent */
-    /* Apply the same refined gradient on hover */
-    background: linear-gradient(to right, var(--neon-blue-violet), var(--neon-magenta)); /* Updated to new neon colors */
+    -webkit-text-stroke: 1.5px transparent;
+    color: transparent;
+    background: linear-gradient(to right, var(--neon-blue-violet), var(--neon-magenta));
     -webkit-background-clip: text;
     background-clip: text;
 }
 
 
-/* Skills Slider Styles */
-.skills-slider-container {
-    position: relative;
-    overflow: hidden;
-    padding: 0 2rem;
-    /* Add padding to match container */
-    display: flex; /* Use flexbox for layout */
-    flex-direction: column; /* Stack slider wrapper and pagination vertically */
-    align-items: center; /* Center content horizontally */
-}
-
-.skills-slider-wrapper {
+/* Projects Grid Styles */
+.projects-grid {
     display: flex;
-    gap: 2rem;
-    /* Spacing between skill cards */
-    overflow-x: scroll;
-    /* Enable horizontal scrolling */
-    -webkit-overflow-scrolling: touch;
-    /* Smooth scrolling on iOS */
-    scroll-snap-type: x mandatory;
-    /* Snap to cards */
-    scrollbar-width: none;
-    /* Hide scrollbar for Firefox */
-    -ms-overflow-style: none;
-    /* Hide scrollbar for IE/Edge */
-    padding-bottom: 1rem;
-    /* Space for potential scrollbar on some systems */
-    width: 100%; /* Ensure wrapper takes full width of container */
+    flex-direction: column;
+    gap: 3rem;
 }
 
-.skills-slider-wrapper::-webkit-scrollbar {
-    display: none;
-    /* Hide scrollbar for Chrome, Safari, Opera */
+/* Project Category Styles */
+.project-category {
+    width: 100%;
 }
 
-.skills-slider-wrapper .skill-card {
-    flex: 0 0 420px; /* Increased width for skill cards */
-    scroll-snap-align: start;
-    /* Snap to the start of each card */
-}
-
-
-/* Projects Slider Styles */
-.projects-slider-container {
+.category-title {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 2rem;
+    text-align: left;
     position: relative;
-    overflow: hidden;
-    padding: 0 2rem;
-    /* Add padding to match container */
-    display: flex; /* Use flexbox for layout */
-    flex-direction: column; /* Stack slider wrapper and pagination vertically */
-    align-items: center; /* Center content horizontally */
+    padding-bottom: 0.5rem;
 }
 
-.projects-slider-wrapper {
-    display: flex;
+.category-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, var(--neon-pink), var(--neon-purple));
+    border-radius: 2px;
+}
+
+.category-projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
     gap: 2rem;
-    /* Spacing between project cards */
-    overflow-x: scroll;
-    /* Enable horizontal scrolling */
-    -webkit-overflow-scrolling: touch;
-    /* Smooth scrolling on iOS */
-    scroll-snap-type: x mandatory;
-    /* Snap to cards */
-    scrollbar-width: none;
-    /* Hide scrollbar for Firefox */
-    -ms-overflow-style: none;
-    /* Hide scrollbar for IE/Edge */
-    padding-bottom: 1rem;
-    /* Space for potential scrollbar on some systems */
-    width: 100%; /* Ensure wrapper takes full width of container */
-}
-
-.projects-slider-wrapper::-webkit-scrollbar {
-    display: none;
-    /* Hide scrollbar for Chrome, Safari, Opera */
+    justify-content: center;
 }
 
 .project-card {
-    flex: 0 0 420px; /* Increased width for project cards */
-    scroll-snap-align: start;
-    /* Snap to the start of each card */
     background-color: white;
     border-radius: 0.5rem;
     overflow: hidden;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
-    /* Make project card a flex container */
     flex-direction: column;
-    /* Stack content vertically */
     flex-grow: 1;
-    /* Allow it to grow and fill available space */
     justify-content: space-between;
-    /* Push button to the bottom */
 }
 
 .project-card:hover {
@@ -833,39 +840,33 @@ p {
 .project-content {
     padding: 1.5rem;
     display: flex;
-    /* Make project content a flex container */
     flex-direction: column;
-    /* Stack content vertically */
     flex-grow: 1;
-    /* Allow description to take up space */
     justify-content: space-between;
-    /* Push button to the bottom */
 }
 
 .project-content h3 {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
-    line-height: 1.3; /* Adjusted line height for titles */
+    line-height: 1.3;
 }
 
 .project-content p {
     color: var(--secondary);
     margin-bottom: 1rem;
     flex-grow: 1;
-    /* Allow description to take up space */
-    font-family: 'Roboto', sans-serif; /* Applied Roboto to project descriptions */
-    text-align: justify; /* Ensure it stays justified */
-    line-height: 1.6; /* Adjusted line height for paragraphs */
+    font-family: 'Roboto', sans-serif;
+    text-align: justify;
+    line-height: 1.6;
 }
 
 .project-content .btn {
-    margin-top: 1.5rem; /* Added space above the button */
-    width: 80%; /* Made button wider */
-    margin-left: auto; /* Center the button */
-    margin-right: auto; /* Center the button */
-    text-align: center; /* Ensure text is centered within the button */
+    margin-top: 1.5rem;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
-
 
 .tag {
     display: inline-block;
@@ -876,55 +877,6 @@ p {
     font-size: 0.875rem;
     margin-right: 0.5rem;
     margin-bottom: 0.5rem;
-}
-
-/* Updated Slider Navigation Button Styles */
-.slider-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: var(--primary); /* Use primary color */
-    color: white;
-    border: none;
-    padding: 0.8rem 1.1rem; /* Slightly larger padding */
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.6rem; /* Larger icon */
-    z-index: 50;
-    transition: all 0.3s ease; /* Smooth transition for all properties */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* More prominent shadow */
-    display: flex; /* Use flex for perfect centering of icon */
-    align-items: center;
-    justify-content: center;
-    opacity: 0.8; /* Slightly less opaque by default */
-}
-
-.slider-nav-btn:hover {
-    /* New slider button hover gradient matching nav links */
-    background-color: transparent; /* Make background transparent to show gradient */
-    background-image: linear-gradient(45deg, var(--neon-pink), var(--neon-purple)); /* Match nav link hover */
-    background-size: 200% 100%; /* For gradient animation */
-    background-position: 0% 0%;
-    animation: sliderBtnHoverGradient 0.5s forwards; /* Animation for gradient */
-    transform: translateY(-50%) scale(1.1); /* Pop out slightly more */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Darker shadow on hover */
-    opacity: 1; /* Fully opaque on hover */
-}
-
-/* Keyframes for slider button hover gradient */
-@keyframes sliderBtnHoverGradient {
-    from { background-position: 0% 0%; }
-    to { background-position: 100% 0%; }
-}
-
-.slider-nav-btn.left {
-    left: 0;
-    margin-left: 0.5rem; /* Closer to the edge */
-}
-
-.slider-nav-btn.right {
-    right: 0;
-    margin-right: 0.5rem; /* Closer to the edge */
 }
 
 .contact {
@@ -1048,14 +1000,41 @@ footer {
         font-size: 2.5rem;
     }
 
-    .projects-slider-container,
-    .skills-slider-container {
+    /* Hero buttons responsive styling */
+    .hero-btns {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+
+    .hero-btns .btn:not(.btn-resume) {
+        max-width: none;
+    }
+
+    .btn-resume {
+        margin-left: 0;
+        order: 3; /* Move resume button to bottom on mobile */
+    }
+
+    .projects-grid,
+    .skills-grid {
         padding: 0 1rem;
         /* Adjust padding for smaller screens */
     }
 
+    .category-title {
+        font-size: 1.5rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .category-title::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
     .project-card,
-    .skills-slider-wrapper .skill-card,
+    .skill-card,
     .education-card, /* Added education card to media query */
     .experience-card { /* Added experience card to media query */
         width: 90%;
@@ -1064,11 +1043,6 @@ footer {
         /* Maintain max width */
         margin: 0 auto;
         /* Center cards if they don't fill the row */
-    }
-
-    .slider-nav-btn {
-        padding: 0.5rem 0.75rem;
-        font-size: 1.2rem;
     }
 
     .hero p {
