@@ -55,8 +55,8 @@ header {
     top: 0;
     z-index: 100;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     transition: all 0.3s ease;
 }
 
@@ -164,8 +164,8 @@ nav {
     width: 100%;
     height: 100vh;
     background-color: rgba(15, 23, 42, 0.98);
-    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -254,8 +254,8 @@ nav {
     background-color: var(--hero-content-light-transparent); /* Soft translucent white as suggested */
     border-radius: 15px; /* Slightly rounded corners */
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); /* Soft shadow for depth */
-    backdrop-filter: blur(10px); /* Increased blur for glassmorphism effect */
     -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px); /* Increased blur for glassmorphism effect */
 }
 
 .hero-content h1 {
@@ -276,7 +276,7 @@ nav {
     font-weight: 700; /* Keep it bold */
     /* Solid white outline - softer */
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5); /* Softer white outline (alpha 0.5) */
-    text-stroke: 1px rgba(255, 255, 255, 0.5);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
 }
 
 .hero-content p {
@@ -750,6 +750,10 @@ p {
     color: var(--dark);
     background: none;
     -webkit-background-clip: unset;
+    background-clip: unset;
+    background-clip: unset;
+    background-clip: unset;
+    background-clip: unset;
 }
 
 /* Specific style for hollow EDA text */
