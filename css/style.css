@@ -1057,6 +1057,21 @@ footer {
         margin-left: 0;
         margin-top: 1rem;
     }
+
+    /* Ensure hero content clears the fixed header on small screens
+       We push the hero down by approximately the header height and
+       align content from the top so the heading isn't hidden. This
+       is scoped to mobile only and does not change desktop layout. */
+    .hero {
+        padding-top: 80px; /* space equal to typical header height on mobile */
+        align-items: flex-start; /* place content starting below the header */
+        box-sizing: border-box;
+        height: calc(80vh - 80px); /* keep similar visual area while accounting for header */
+    }
+
+    .hero-content {
+        margin-top: 0.5rem; /* small buffer from the header */
+    }
 }
 
 @media (max-width: 480px) {
