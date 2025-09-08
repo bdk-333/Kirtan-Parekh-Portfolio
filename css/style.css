@@ -1085,11 +1085,18 @@ footer {
         padding-top: 80px; /* space equal to typical header height on mobile */
         align-items: flex-start; /* place content starting below the header */
         box-sizing: border-box;
-        height: calc(80vh - 80px); /* keep similar visual area while accounting for header */
+        /* allow the hero to grow to fit content (buttons won't be clipped)
+           but keep a reasonable visual height on most phones */
+        height: auto;
+        min-height: calc(60vh);
+        overflow: visible; /* ensure buttons and content are not hidden */
+        padding-bottom: 2rem; /* extra breathing room for hero buttons */
     }
 
     .hero-content {
         margin-top: 0.5rem; /* small buffer from the header */
+        z-index: 3; /* keep hero content above following sections */
+        padding-bottom: 1rem; /* ensure buttons have space inside the card */
     }
 }
 
