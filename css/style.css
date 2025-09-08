@@ -565,10 +565,20 @@ p {
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+/* Keep about/profile images inside their placeholder area.
+   If the source image is large, crop (zoom) to fill the box using object-fit.
+   This prevents oversized images from expanding their container. */
+.about-image {
+    /* prefer a consistent visual height for the about image on most screens */
+    min-height: 300px;
+}
+
 .about-image img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
+    object-fit: cover; /* fill the container and crop excess */
+    object-position: center center; /* focus center when cropping */
 }
 
 .about-content h3 {
@@ -749,11 +759,8 @@ p {
 .skill-icons .icon-wrapper:hover span {
     color: var(--dark);
     background: none;
-    -webkit-background-clip: unset;
-    background-clip: unset;
-    background-clip: unset;
-    background-clip: unset;
-    background-clip: unset;
+    -webkit-background-clip: initial;
+    background-clip: initial;
 }
 
 /* Specific style for hollow EDA text */
@@ -763,7 +770,8 @@ p {
     -webkit-text-stroke: 1.5px var(--secondary);
     color: transparent;
     background: none;
-    -webkit-background-clip: unset;
+    -webkit-background-clip: initial;
+    background-clip: initial;
     transition: all 0.3s ease;
 }
 
@@ -839,6 +847,17 @@ p {
     align-items: center;
     justify-content: center;
     color: var(--secondary);
+    overflow: hidden; /* ensure images don't bleed out of the image area */
+    position: relative;
+}
+
+/* Ensure project images are constrained to the project-image box
+   and cropped if they're larger than the placeholder. */
+.project-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover; /* crop/zoom to fill the area */
 }
 
 .project-content {
