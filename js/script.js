@@ -32,6 +32,9 @@ window.addEventListener('resize', () => {
     }
 });
 
+/* ============================================
+   HEADER SCROLL EFFECT
+   ============================================ */
 // Add scroll effect to header
 window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
@@ -42,7 +45,225 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// --- Hero Canvas Animation ---
+/* ============================================
+   SMOOTH SCROLLING & NAVIGATION
+   ============================================ */
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href === '#' || href === '') return;
+        
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+            const headerOffset = 80;
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Active section highlighting in navigation
+function updateActiveNav() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a, .mobile-menu a');
+    const scrollPosition = window.scrollY + 100;
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${sectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+    });
+}
+
+window.addEventListener('scroll', updateActiveNav);
+window.addEventListener('load', updateActiveNav);
+
+/* ============================================
+   BACK TO TOP BUTTON
+   ============================================ */
+// Back to Top Button
+const backToTopButton = document.getElementById('backToTop');
+
+function toggleBackToTop() {
+    if (window.scrollY > 300) {
+        backToTopButton.classList.add('show');
+    } else {
+        backToTopButton.classList.remove('show');
+    }
+}
+
+backToTopButton.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+window.addEventListener('scroll', toggleBackToTop);
+
+/* ============================================
+   SCROLL ANIMATIONS
+   ============================================ */
+// Scroll-triggered animations using Intersection Observer
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in-visible');
+        }
+    });
+}, observerOptions);
+
+// Observe all sections
+document.querySelectorAll('section').forEach(section => {
+    section.classList.add('fade-in');
+    observer.observe(section);
+});
+
+/* ============================================
+   FORM VALIDATION & SUBMISSION
+   ============================================ */
+// Form Validation and Submission
+const contactForm = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+const formStatus = document.getElementById('formStatus');
+
+if (contactForm && submitBtn) {
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoader = submitBtn.querySelector('.btn-loader');
+    // Real-time validation
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const messageError = document.getElementById('messageError');
+
+    function validateName() {
+        const value = nameInput.value.trim();
+        if (value.length < 2) {
+            nameError.textContent = 'Name must be at least 2 characters';
+            return false;
+        }
+        nameError.textContent = '';
+        return true;
+    }
+
+    function validateEmail() {
+        const value = emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+            emailError.textContent = 'Please enter a valid email address';
+            return false;
+        }
+        emailError.textContent = '';
+        return true;
+    }
+
+    function validateMessage() {
+        const value = messageInput.value.trim();
+        if (value.length < 10) {
+            messageError.textContent = 'Message must be at least 10 characters';
+            return false;
+        }
+        messageError.textContent = '';
+        return true;
+    }
+
+    nameInput.addEventListener('blur', validateName);
+    nameInput.addEventListener('input', () => {
+        if (nameError.textContent) validateName();
+    });
+
+    emailInput.addEventListener('blur', validateEmail);
+    emailInput.addEventListener('input', () => {
+        if (emailError.textContent) validateEmail();
+    });
+
+    messageInput.addEventListener('blur', validateMessage);
+    messageInput.addEventListener('input', () => {
+        if (messageError.textContent) validateMessage();
+    });
+
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Clear previous status
+        formStatus.className = 'form-status';
+        formStatus.style.display = 'none';
+
+        // Validate all fields
+        const isNameValid = validateName();
+        const isEmailValid = validateEmail();
+        const isMessageValid = validateMessage();
+
+        if (!isNameValid || !isEmailValid || !isMessageValid) {
+            formStatus.className = 'form-status error';
+            formStatus.textContent = 'Please fix the errors above';
+            formStatus.style.display = 'block';
+            return;
+        }
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.classList.add('loading');
+
+        try {
+            const formData = new FormData(contactForm);
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                formStatus.className = 'form-status success';
+                formStatus.textContent = 'Message sent successfully! I\'ll get back to you soon.';
+                formStatus.style.display = 'block';
+                contactForm.reset();
+            } else {
+                throw new Error('Form submission failed');
+            }
+        } catch (error) {
+            formStatus.className = 'form-status error';
+            formStatus.textContent = 'Something went wrong. Please try again or contact me directly.';
+            formStatus.style.display = 'block';
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('loading');
+            // Ensure inline styles are reset (fallback)
+            if (btnText) btnText.style.display = '';
+            if (btnLoader) btnLoader.style.display = '';
+        }
+    });
+}
+
+/* ============================================
+   HERO CANVAS ANIMATION
+   ============================================ */
+// Hero Canvas Animation
 class NeuronNetwork {
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
@@ -54,12 +275,15 @@ class NeuronNetwork {
         this.nodes = [];
         this.connections = [];
         this.animationFrameId = null;
+        this.isPaused = false;
 
-        this.maxNodes = 100; // Increased max neurons
-        this.initialNodes = 30; // Start with more neurons
-        this.spawnInterval = 1000; // Spawn a new neuron every 1 second initially
+        // Performance optimization: reduce nodes on mobile devices
+        const isMobile = window.innerWidth < 768;
+        this.maxNodes = isMobile ? 50 : 100;
+        this.initialNodes = isMobile ? 15 : 30;
+        this.spawnInterval = isMobile ? 2000 : 1000;
         this.lastSpawnTime = Date.now();
-        this.nodeLifespan = 15000; // Neurons live for 25 seconds before dying
+        this.nodeLifespan = 15000;
 
         // Neon color palette (from the provided image, converted to HSL for dynamic use)
         this.colors = [
@@ -74,6 +298,30 @@ class NeuronNetwork {
         this.animate();
 
         window.addEventListener('resize', this.handleResize.bind(this));
+        
+        // Pause animation when tab is not visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                this.pause();
+            } else {
+                this.resume();
+            }
+        });
+    }
+
+    pause() {
+        this.isPaused = true;
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
+        }
+    }
+
+    resume() {
+        this.isPaused = false;
+        if (!this.animationFrameId) {
+            this.animate();
+        }
     }
 
     initCanvas() {
@@ -119,6 +367,16 @@ class NeuronNetwork {
     }
 
     handleResize() {
+        const wasMobile = this.maxNodes === 50;
+        const isMobile = window.innerWidth < 768;
+        
+        // Update node counts if switching between mobile/desktop
+        if (wasMobile !== isMobile) {
+            this.maxNodes = isMobile ? 50 : 100;
+            this.initialNodes = isMobile ? 15 : 30;
+            this.spawnInterval = isMobile ? 2000 : 1000;
+        }
+        
         this.initCanvas();
         this.createInitialNetwork(); // Re-create with initial nodes on resize
         // Re-initialize lastSpawnTime to prevent immediate spawning after resize
@@ -126,6 +384,8 @@ class NeuronNetwork {
     }
 
     animate() {
+        if (this.isPaused) return;
+
         // Clear the entire canvas each frame to remove all traces
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -275,7 +535,10 @@ class Connection {
     }
 }
 
-// --- Initialize Hero Animation ---
+/* ============================================
+   INITIALIZATION
+   ============================================ */
+// Initialize Hero Animation
 window.addEventListener('load', () => {
     // Hide loader overlay when the page is fully loaded
     const loaderOverlay = document.getElementById('loader-overlay');

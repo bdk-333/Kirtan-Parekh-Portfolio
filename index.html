@@ -9,7 +9,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;700&family=Open+Sans:wght@300;400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;700&family=Open+Sans:wght@300;400;700&family=Lato:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
 
@@ -17,24 +17,25 @@
   </head>
 
   <body>
-    <div id="loader-overlay">
-      <div id="loader-spinner"></div>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+    <div id="loader-overlay" aria-hidden="true">
+      <div id="loader-spinner" aria-label="Loading"></div>
     </div>
 
     <header>
       <div class="container">
         <nav>
           <a href="#" class="logo">
-            <img src="assets/images/updated_logo - Copy.png" alt="KP Logo" />
+            <img src="assets/images/updated_logo.png" alt="KP Logo" />
           </a>
 
-          <div class="nav-links">
-            <a href="#about">About</a>
-            <a href="#experience">Experience</a>
-            <a href="#projects">Projects</a>
-            <a href="#skills">Skills</a>
-            <a href="#education">Education</a>
-            <a href="#contact">Contact</a>
+          <div class="nav-links" role="navigation" aria-label="Main navigation">
+            <a href="#about" aria-label="Navigate to About section">About</a>
+            <a href="#experience" aria-label="Navigate to Experience section">Experience</a>
+            <a href="#projects" aria-label="Navigate to Projects section">Projects</a>
+            <a href="#skills" aria-label="Navigate to Skills section">Skills</a>
+            <a href="#education" aria-label="Navigate to Education section">Education</a>
+            <a href="#contact" aria-label="Navigate to Contact section">Contact</a>
           </div>
 
           <button
@@ -50,17 +51,17 @@
       </div>
     </header>
 
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="#about">About</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#education">Education</a>
-      <a href="#contact">Contact</a>
+    <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+      <a href="#about" aria-label="Navigate to About section">About</a>
+      <a href="#experience" aria-label="Navigate to Experience section">Experience</a>
+      <a href="#projects" aria-label="Navigate to Projects section">Projects</a>
+      <a href="#skills" aria-label="Navigate to Skills section">Skills</a>
+      <a href="#education" aria-label="Navigate to Education section">Education</a>
+      <a href="#contact" aria-label="Navigate to Contact section">Contact</a>
     </div>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="main-content">
       <div class="container">
         <!-- Canvas for the AI/Deep Learning animation -->
         <canvas id="heroCanvas"></canvas>
@@ -93,6 +94,9 @@
           <div class="about-image">
             <img
               src="assets/images/me.png"
+              loading="lazy"
+              width="600"
+              height="400"
               onerror="this.onerror=null;this.src='https://placehold.co/600x400/e2e8f0/64748b?text=Kirtankumar%20Parekh';"
               alt="About Kirtankumar Parekh"
             />
@@ -240,6 +244,9 @@
                 <div class="project-image">
                   <img
                     src="assets/images/projects/RAG-QA.png"
+                    loading="lazy"
+                    width="400"
+                    height="200"
                     onerror="this.onerror=null;this.src='https://placehold.co/400x200/e2e8f0/64748b?text=RAG+Doc+QA';"
                     alt="RAG-based Document QA Chatbot Project Image"
                   />
@@ -278,6 +285,9 @@
                 <div class="project-image">
                   <img
                     src="assets/images/projects/llama.png"
+                    loading="lazy"
+                    width="400"
+                    height="200"
                     onerror="this.onerror=null;this.src='https://placehold.co/400x200/e2e8f0/64748b?text=AI+Chatbot+Ollama';"
                     alt="AI Chatbot Ollama Project Image"
                   />
@@ -319,6 +329,9 @@
                 <div class="project-image">
                   <img
                     src="assets/images/projects/cifar10.png"
+                    loading="lazy"
+                    width="400"
+                    height="200"
                     onerror="this.onerror=null;this.src='https://placehold.co/400x200/e2e8f0/64748b?text=CIFAR10+CNN';"
                     alt="CIFAR10 CNN Classifier Project Image"
                   />
@@ -353,6 +366,9 @@
                 <div class="project-image">
                   <img
                     src="assets/images/projects/emotion-cnn.png"
+                    loading="lazy"
+                    width="400"
+                    height="200"
                     onerror="this.onerror=null;this.src='https://placehold.co/400x200/e2e8f0/64748b?text=Emotion+CNN';"
                     alt="FER2013 Emotion Detection CNN Project Image"
                   />
@@ -389,6 +405,9 @@
                 <div class="project-image">
                   <img
                     src="assets/images/projects/cricket-player.png"
+                    loading="lazy"
+                    width="400"
+                    height="200"
                     onerror="this.onerror=null;this.src='https://placehold.co/400x200/e2e8f0/64748b?text=Cricket%20Classifier';"
                     alt="Indian Cricket Player Classifier Project Image"
                   />
@@ -427,6 +446,9 @@
                 <div class="project-image">
                   <img
                     src="assets/images/projects/real-time-emotion-detection.png"
+                    loading="lazy"
+                    width="400"
+                    height="200"
                     onerror="this.onerror=null;this.src='https://placehold.co/400x200/e2e8f0/64748b?text=Emotion%20Detection';"
                     alt="Emotion Detection System Project Image"
                   />
@@ -463,6 +485,9 @@
                 <div class="project-image">
                   <img
                     src="assets/images/project3_insurance_premiums.png"
+                    loading="lazy"
+                    width="400"
+                    height="200"
                     onerror="this.onerror=null;this.src='https://placehold.co/400x200/e2e8f0/64748b?text=Insurance%20Premiums';"
                     alt="Predicting Insurance Premiums Project Image"
                   />
@@ -502,6 +527,9 @@
                 <div class="project-image">
                   <img
                     src="assets/images/project5_mental_fitness.png"
+                    loading="lazy"
+                    width="400"
+                    height="200"
                     onerror="this.onerror=null;this.src='https://placehold.co/400x200/e2e8f0/64748b?text=Mental%20Fitness';"
                     alt="Mental Fitness Tracker Project Image"
                   />
@@ -542,6 +570,9 @@
                 <div class="project-image">
                   <img
                     src="https://placehold.co/400x200/e2e8f0/64748b?text=GameZone+Analytics"
+                    loading="lazy"
+                    width="400"
+                    height="200"
                     alt="GameZone Data Analytics Project Image"
                   />
                 </div>
@@ -579,6 +610,9 @@
                 <div class="project-image">
                   <img
                     src="https://placehold.co/400x200/e2e8f0/64748b?text=Walmart+Sales+Analysis"
+                    loading="lazy"
+                    width="400"
+                    height="200"
                     alt="Walmart Sales Analysis Project Image"
                   />
                 </div>
@@ -623,6 +657,9 @@
                 <div class="project-image">
                   <img
                     src="assets/images/project4_grocery_system.png"
+                    loading="lazy"
+                    width="400"
+                    height="200"
                     onerror="this.onerror=null;this.src='https://placehold.co/400x200/e2e8f0/64748b?text=Grocery%20System';"
                     alt="Grocery Store Management System Project Image"
                   />
@@ -659,6 +696,9 @@
                 <div class="project-image">
                   <img
                     src="https://placehold.co/400x200/e2e8f0/64748b?text=Valorant+VCT+Analysis"
+                    loading="lazy"
+                    width="400"
+                    height="200"
                     alt="Valorant VCT Dataset Analysis Project Image"
                   />
                 </div>
@@ -970,6 +1010,7 @@
           class="contact-form"
           action="https://formspree.io/f/mvgqqkaq"
           method="POST"
+          id="contactForm"
         >
           <div class="form-group">
             <label for="name">Name</label>
@@ -979,7 +1020,9 @@
               name="name"
               placeholder="Your Name"
               required
+              aria-required="true"
             />
+            <span class="error-message" id="nameError"></span>
           </div>
           <div class="form-group">
             <label for="email">Email</label>
@@ -989,7 +1032,9 @@
               name="_replyto"
               placeholder="Your Email"
               required
+              aria-required="true"
             />
+            <span class="error-message" id="emailError"></span>
           </div>
           <div class="form-group">
             <label for="message">Message</label>
@@ -998,37 +1043,54 @@
               name="message"
               placeholder="Your Message"
               required
+              aria-required="true"
             ></textarea>
+            <span class="error-message" id="messageError"></span>
           </div>
-          <button type="submit" class="btn">Send Message</button>
+          <div class="form-status" id="formStatus"></div>
+          <button type="submit" class="btn" id="submitBtn">
+            <span class="btn-text">Send Message</span>
+            <span class="btn-loader">
+              <i class="fas fa-spinner fa-spin"></i> Sending...
+            </span>
+          </button>
         </form>
       </div>
     </section>
 
     <footer>
       <div class="container">
-        <div class="social-links footer-social-links">
-          <a
-            href="https://www.linkedin.com/in/kirtan-s-parekh/"
-            aria-label="LinkedIn"
-            target="_blank"
-            rel="noopener"
-            ><i class="fab fa-linkedin-in"></i
-          ></a>
-          <a
-            href="https://github.com/bdk-333"
-            aria-label="GitHub"
-            target="_blank"
-            rel="noopener"
-            ><i class="fab fa-github"></i
-          ></a>
-          <a
-            href="https://www.kaggle.com/blackdragonk333"
-            aria-label="Kaggle"
-            target="_blank"
-            rel="noopener"
-            ><i class="fab fa-kaggle"></i
-          ></a>
+        <div class="footer-content">
+          <div class="footer-info">
+            <h3>Kirtankumar Parekh</h3>
+            <p>Data Science Graduate Student | Machine Learning Enthusiast</p>
+            <a href="mailto:kirtan.parekh@example.com" class="footer-email" aria-label="Send email">
+              <i class="fas fa-envelope"></i> Get in Touch
+            </a>
+          </div>
+          <div class="social-links footer-social-links">
+            <a
+              href="https://www.linkedin.com/in/kirtan-s-parekh/"
+              aria-label="Visit LinkedIn profile"
+              target="_blank"
+              rel="noopener"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+            <a
+              href="https://github.com/bdk-333"
+              aria-label="Visit GitHub profile"
+              target="_blank"
+              rel="noopener"
+              ><i class="fab fa-github"></i
+            ></a>
+            <a
+              href="https://www.kaggle.com/blackdragonk333"
+              aria-label="Visit Kaggle profile"
+              target="_blank"
+              rel="noopener"
+              ><i class="fab fa-kaggle"></i
+            ></a>
+          </div>
         </div>
         <p class="copyright">
           &copy; <span id="currentYear"></span> Kirtankumar Parekh. All rights
@@ -1036,6 +1098,11 @@
         </p>
       </div>
     </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+      <i class="fas fa-arrow-up"></i>
+    </button>
 
     <script src="js/script.js"></script>
   </body>
