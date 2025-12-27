@@ -121,15 +121,18 @@ window.addEventListener('scroll', toggleBackToTop);
    SCROLL ANIMATIONS
    ============================================ */
 // Scroll-triggered animations using Intersection Observer
+// Improved configuration for better mobile support
 const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: [0, 0.1, 0.2], // Multiple thresholds for better detection
+    rootMargin: '0px 0px -100px 0px' // Increased margin for earlier triggering
 };
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('fade-in-visible');
+            // Once visible, we can unobserve to improve performance
+            observer.unobserve(entry.target);
         }
     });
 }, observerOptions);
@@ -138,6 +141,76 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('section').forEach(section => {
     section.classList.add('fade-in');
     observer.observe(section);
+    
+    // Immediate check: if section is already in viewport on load, make it visible
+    const rect = section.getBoundingClientRect();
+    const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+    if (isInViewport) {
+        section.classList.add('fade-in-visible');
+    }
+});
+
+// Fallback: Ensure sections are visible after a delay or on scroll
+// This handles cases where Intersection Observer might not fire on mobile
+let fallbackCheckTimeout;
+function ensureSectionsVisible() {
+    clearTimeout(fallbackCheckTimeout);
+    fallbackCheckTimeout = setTimeout(() => {
+        const viewportHeight = window.innerHeight;
+        const scrollY = window.scrollY;
+        
+        document.querySelectorAll('section').forEach(section => {
+            const rect = section.getBoundingClientRect();
+            const sectionTop = rect.top + scrollY;
+            const sectionBottom = sectionTop + rect.height;
+            
+            // If section is in or near viewport, make it visible
+            // Use larger margin for mobile to catch sections earlier
+            const margin = window.innerWidth < 768 ? 400 : 200;
+            if (sectionTop < scrollY + viewportHeight + margin && 
+                sectionBottom > scrollY - margin) {
+                section.classList.add('fade-in-visible');
+            }
+        });
+    }, 50); // Faster check on mobile
+}
+
+// Special handling for projects section on mobile
+function checkProjectsSection() {
+    if (window.innerWidth < 768) {
+        const projectsSection = document.getElementById('projects');
+        if (projectsSection) {
+            const rect = projectsSection.getBoundingClientRect();
+            // If projects section is anywhere near viewport, make it visible
+            if (rect.top < window.innerHeight + 500 && rect.bottom > -500) {
+                projectsSection.classList.add('fade-in-visible');
+            }
+        }
+    }
+}
+
+// Run fallback check on scroll and after page load
+window.addEventListener('scroll', () => {
+    ensureSectionsVisible();
+    checkProjectsSection();
+}, { passive: true });
+
+window.addEventListener('load', () => {
+    ensureSectionsVisible();
+    checkProjectsSection();
+    // Also check after a short delay to catch any missed sections
+    setTimeout(() => {
+        ensureSectionsVisible();
+        checkProjectsSection();
+    }, 500);
+});
+
+// Additional check on resize for mobile orientation changes
+window.addEventListener('resize', () => {
+    setTimeout(() => {
+        ensureSectionsVisible();
+        checkProjectsSection();
+    }, 100);
 });
 
 /* ============================================
