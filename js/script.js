@@ -351,8 +351,8 @@ class NeuronNetwork {
         this.isPaused = false;
 
         const isMobile = window.innerWidth < 768;
-        this.maxNodes = isMobile ? 18 : 32;
-        this.connectionDistance = isMobile ? 100 : 130;
+        this.maxNodes = isMobile ? 22 : 48;
+        this.connectionDistance = isMobile ? 120 : 170;
 
         this.colors = [
             '197, 213, 228', // #C5D5E4 dusty blue
@@ -420,8 +420,8 @@ class NeuronNetwork {
 
     handleResize() {
         const isMobile = window.innerWidth < 768;
-        this.maxNodes = isMobile ? 18 : 32;
-        this.connectionDistance = isMobile ? 100 : 130;
+        this.maxNodes = isMobile ? 22 : 48;
+        this.connectionDistance = isMobile ? 120 : 170;
         this.initCanvas();
         this.createInitialNetwork();
     }
@@ -466,7 +466,7 @@ class Node {
     draw(ctx) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${this.color}, 0.35)`;
+        ctx.fillStyle = `rgba(${this.color}, 0.45)`;
         ctx.fill();
     }
 }
@@ -483,7 +483,7 @@ class Connection {
         ctx.beginPath();
         ctx.moveTo(this.node1.x, this.node1.y);
         ctx.lineTo(this.node2.x, this.node2.y);
-        ctx.strokeStyle = `rgba(${this.node1.color}, 0.12)`;
+        ctx.strokeStyle = `rgba(${this.node1.color}, 0.18)`;
         ctx.lineWidth = 1;
         ctx.stroke();
     }
